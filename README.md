@@ -1,6 +1,3 @@
-Here's a `README.md` file for your crop disease detection project:
-
----
 
 # 🌾 Crop Disease Detection using Deep Learning
 
