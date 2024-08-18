@@ -48,3 +48,4 @@ urllib3
 Werkzeug
 wheel
 wrapt
+tflite-runtime
