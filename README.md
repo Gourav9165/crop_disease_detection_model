@@ -21,7 +21,7 @@ Welcome to the Crop Disease Detection project! This Django-based web application
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/yourusername/crop-disease-detection.git
+   git clone https://github.com/Gourav9165/crop_disease_detection_model.git
    cd crop-disease-detection
    ```
 
