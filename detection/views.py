@@ -16,8 +16,7 @@ interpreter.allocate_tensors()
 
 # Load class names
 with open(labels_path, "r") as file:
-    class_names = file.readlines()
-
+    class_names = [line.strip() for line in file.readlines()]
 
 def home(request):
     return render(request, 'detection/upload.html')
@@ -59,7 +58,6 @@ def enter_url(request):
         'url_form': url_form,
     })
 
-
 def predict_image(image_path_or_url):
     if image_path_or_url.startswith('http'):
         # Handle the image as a URL
@@ -88,10 +86,11 @@ def predict_image(image_path_or_url):
 
     # Get the predicted class and confidence score
     index = np.argmax(output_data)
-    class_name = class_names[index].strip()
+    class_name = class_names[index]
     confidence_score = output_data[0][index] * 100  # Convert to percentage
 
-    return class_name[2:], confidence_score
+    return class_name, confidence_score
+
 
 
 from .forms import ImageUploadForm, ImageURLForm  # Ensure ImageURLForm is imported
