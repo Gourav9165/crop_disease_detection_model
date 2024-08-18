@@ -9,8 +9,8 @@ from io import BytesIO
 from .forms import ImageUploadForm, ImageURLForm
 
 # Load the TFLite model
-model_path = "D:/PROGRAMMING/Crop Disease Detection/Original/model.tflite"
-labels_path = "D:/PROGRAMMING/Crop Disease Detection/Original/labels.txt"
+model_path = "/model.tflite"
+labels_path = "labels.txt"
 interpreter = tf.lite.Interpreter(model_path=model_path)
 interpreter.allocate_tensors()
 
