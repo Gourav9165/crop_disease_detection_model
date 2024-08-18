@@ -23,3 +23,9 @@
         { "src": "/(.*)", "dest": "/detection/wsgi.py" }
     ]
 }
+
+{
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/" }
+  ]
+}
