@@ -10,7 +10,7 @@ from .forms import ImageUploadForm, ImageURLForm
 
 # Load the TFLite model
 model_path = "detection/model.tflite"
-labels_path = "labels.txt"
+labels_path = "detection/labels.txt"
 interpreter = tf.lite.Interpreter(model_path=model_path)
 interpreter.allocate_tensors()
 
