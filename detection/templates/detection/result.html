@@ -22,7 +22,8 @@
 
         /* Container styling */
         .result-container {
-            width: 40%;
+            width: 90%;
+            max-width: 600px;
             background: linear-gradient(135deg, #b7b5b529, #ffffff, #b7b5b55c);
             border-radius: 20px;
             box-shadow: 0 20px 30px rgba(0, 0, 0, 0.3);
@@ -30,6 +31,8 @@
             animation: fadeIn 1s ease-in-out;
             backdrop-filter: blur(10px);
             transition: transform 0.3s;
+            /* padding: 20px; */
+            box-sizing: border-box;
         }
 
         .result-container:hover {
@@ -48,14 +51,15 @@
 
         .header h2 {
             margin: 0;
-            font-size: 30px;
+            font-size: 24px;
             font-weight: 700;
             letter-spacing: 1px;
         }
 
         /* Image styling */
         img {
-            max-width: 100%;
+            width: 100%;
+            max-width: 500px;
             height: auto;
             border-radius: 15px;
             margin-bottom: 20px;
@@ -65,7 +69,7 @@
 
         /* Text styling */
         p {
-            font-size: 18px;
+            font-size: 1rem;
             margin: 10px 0;
             color: #333;
             animation: fadeIn 2s ease-in-out;
@@ -73,17 +77,16 @@
 
         /* Link button styling */
         a {
-            width: 50%;
-            position: relative;
-            padding: 10px 50px;
+            width: 80%;
+            max-width: 300px;
+            padding: 12px;
             border-radius: 25px;
             background-color: #42ef8d;
             color: #000;
-            overflow: hidden;
             border: none;
             cursor: pointer;
             transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-            font-size: 1.1rem;
+            font-size: 1rem;
             margin-top: 10px;
             margin-bottom: 20px;
             display: inline-block;
@@ -106,6 +109,49 @@
             to {
                 opacity: 1;
                 transform: scale(1);
+            }
+        }
+
+        /* Media queries for smaller screens */
+        @media (max-width: 768px) {
+            .header h2 {
+                font-size: 22px;
+            }
+
+            img {
+                max-width: 100%;
+            }
+
+            p {
+                font-size: 0.9rem;
+            }
+
+            a {
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h2 {
+                font-size: 20px;
+            }
+
+            .result-container {
+                width: 100%;
+                /* padding: 15px; */
+            }
+
+            img {
+                max-width: 100%;
+            }
+
+            p {
+                font-size: 0.85rem;
+            }
+
+            a {
+                font-size: 0.85rem;
+                width: 90%;
             }
         }
     </style>
