@@ -22,7 +22,8 @@
 
         /* Container styling */
         .form-container {
-            width: 40%;
+            width: 80%;
+            max-width: 500px;
             background: linear-gradient(135deg, #b7b5b529, #ffffff, #b7b5b55c);
             border-radius: 20px;
             box-shadow: 0 20px 30px rgba(0, 0, 0, 0.3);
@@ -30,6 +31,7 @@
             animation: fadeIn 1s ease-in-out;
             backdrop-filter: blur(10px);
             transition: transform 0.3s;
+            padding: 0 0 20px 0;
         }
 
         .form-container:hover {
@@ -48,16 +50,16 @@
 
         .header h2 {
             margin: 0;
-            font-size: 30px;
+            font-size: 24px;
             font-weight: 700;
             letter-spacing: 1px;
         }
 
         /* Button styling */
         button {
-            width: 50%;
+            width: 90%;
             position: relative;
-            padding: 10px 50px;
+            padding: 10px;
             border-radius: 25px;
             background-color: #42ef8d;
             color: #000;
@@ -65,7 +67,7 @@
             border: none;
             cursor: pointer;
             transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-            font-size: 1.1rem;
+            font-size: 1rem;
             margin-top: 10px;
             margin-bottom: 20px;
             display: inline-block;
@@ -74,7 +76,7 @@
 
         button:hover {
             background-color: #8ae9b3;
-            transform: scale(1.05);
+            transform: scale(1.03);
         }
 
         /* Fade-in animation */
@@ -87,6 +89,33 @@
             to {
                 opacity: 1;
                 transform: scale(1);
+            }
+        }
+
+        /* Media queries for smaller screens */
+        @media (max-width: 768px) {
+            .header h2 {
+                font-size: 22px;
+            }
+
+            button {
+                font-size: 0.9rem;
+                padding: 10px 30px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h2 {
+                font-size: 20px;
+            }
+
+            .form-container {
+                width: 90%;
+                padding: 15px;
+            }
+
+            button {
+                font-size: 0.85rem;
             }
         }
     </style>
