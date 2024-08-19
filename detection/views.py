@@ -1,193 +1,115 @@
-<!DOCTYPE html>
-<html lang="en">
+from django.shortcuts import render, redirect
+from django.core.files.storage import FileSystemStorage
+from .models import UploadedImage
+import tensorflow as tf
+from PIL import Image, ImageOps, UnidentifiedImageError
+import numpy as np
+import requests
+from io import BytesIO
+from .forms import ImageUploadForm, ImageURLForm
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crop Disease Detection</title>
-    <style>
-        /* General body styling */
-        body {
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: url('https://img.freepik.com/free-photo/flat-lay-transparent-leaves-lamina_23-2148678504.jpg?t=st=1723920846~exp=1723924446~hmac=adad70b50a08734c662e9c64cb6dc533a2f024d26bbbd0a2a24edc5948446e5d&w=996') no-repeat center center fixed;
-            background-size: cover;
-            font-family: 'Poppins', sans-serif;
-            overflow: hidden;
-        }
+# Load the TFLite model
+model_path = "D:/PROGRAMMING/Crop Disease Detection/Original/model.tflite"
+labels_path = "D:/PROGRAMMING/Crop Disease Detection/Original/labels.txt"
+interpreter = tf.lite.Interpreter(model_path=model_path)
+interpreter.allocate_tensors()
 
-        /* Container styling */
-        .form-container {
-            width: 80%;
-            max-width: 500px;
-            background: linear-gradient(135deg, #b7b5b529, #ffffff, #b7b5b55c);
-            border-radius: 20px;
-            box-shadow: 0 20px 30px rgba(0, 0, 0, 0.3);
-            text-align: center;
-            animation: fadeIn 1s ease-in-out;
-            backdrop-filter: blur(10px);
-            transition: transform 0.3s;
-        }
+# Load class names
+with open(labels_path, "r") as file:
+    class_names = [line.strip() for line in file.readlines()]
 
-        .form-container:hover {
-            transform: scale(1.03);
-        }
+def home(request):
+    return render(request, 'detection/upload.html')
 
-        .header {
-            text-align: center;
-            padding: 15px 0;
-            background-color: #8ae9b3;
-            background-image: linear-gradient(315deg, #c8d6e5 0%, #8ae9b3 74%);
-            color: #2c3e50;
-            margin-bottom: 20px;
-            border-radius: 20px;
-        }
+def upload_image(request):
+    if request.method == 'POST':
+        upload_form = ImageUploadForm(request.POST, request.FILES)
+        if upload_form.is_valid():
+            upload_form.save()
+            uploaded_image = upload_form.instance
+            result = predict_image(uploaded_image.image.path)
+            if 'error' in result:
+                return render(request, 'detection/upload_image.html', {
+                    'upload_form': upload_form,
+                    'error': result['error']
+                })
+            else:
+                return render(request, 'detection/result.html', {
+                    'class_name': result['class_name'],
+                    'confidence': result['confidence'],
+                    'image_url': uploaded_image.image.url
+                })
+        else:
+            return render(request, 'detection/upload_image.html', {
+                'upload_form': upload_form,
+                'error': 'Invalid form submission. Please try again.'
+            })
+    else:
+        upload_form = ImageUploadForm()
 
-        .header h2 {
-            margin: 0;
-            font-size: 24px;
-            font-weight: 700;
-            letter-spacing: 1px;
-        }
+    return render(request, 'detection/upload_image.html', {
+        'upload_form': upload_form,
+    })
 
-        form {
-            margin-bottom: 20px;
-            padding: 0 20px;
-        }
 
-        /* Error message styling */
-        .error-message {
-            color: red;
-            font-weight: bold;
-            margin-bottom: 15px;
-        }
+def enter_url(request):
+    if request.method == 'POST':
+        url_form = ImageURLForm(request.POST)
+        if url_form.is_valid():
+            image_url = url_form.cleaned_data['image_url']
+            result = predict_image(image_url)
+            if 'error' in result:
+                return render(request, 'detection/enter_url.html', {
+                    'url_form': url_form,
+                    'error': result['error']
+                })
+            else:
+                return render(request, 'detection/result.html', {
+                    'class_name': result['class_name'],
+                    'confidence': result['confidence'],
+                    'image_url': image_url
+                })
+    else:
+        url_form = ImageURLForm()
 
-        /* Hide the default file input */
-        input[type="file"] {
-            display: none;
-        }
+    return render(request, 'detection/enter_url.html', {
+        'url_form': url_form,
+    })
 
-        /* Custom file input styling */
-        .custom-file-upload {
-            width: 100%;
-            max-width: 300px;
-            padding: 10px;
-            border-radius: 25px;
-            background-color: #42ef8d;
-            color: #000;
-            cursor: pointer;
-            transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-            font-size: 1rem;
-            margin-top: 10px;
-            margin-bottom: 20px;
-            display: inline-block;
-            text-align: center;
-        }
+def predict_image(image_path_or_url):
+    try:
+        if image_path_or_url.startswith('http'):
+            # Handle the image as a URL
+            response = requests.get(image_path_or_url)
+            image = Image.open(BytesIO(response.content)).convert("RGB")
+        else:
+            # Handle the image as a file path
+            image = Image.open(image_path_or_url).convert("RGB")
 
-        .custom-file-upload:hover {
-            background-color: #8ae9b3;
-            transform: scale(1.03);
-        }
+        # Resize the image and normalize
+        size = (224, 224)
+        image = ImageOps.fit(image, size, Image.Resampling.LANCZOS)
+        image_array = np.asarray(image)
+        normalized_image_array = (image_array.astype(np.float32) / 127.5) - 1
 
-        /* Button styling */
-        button {
-            width: 100%;
-            max-width: 320px;
-            padding: 10px;
-            border-radius: 25px;
-            background-color: #42ef8d;
-            color: #000;
-            border: none;
-            cursor: pointer;
-            transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-            font-size: 1rem;
-            margin-top: 10px;
-            margin-bottom: 20px;
-            display: inline-block;
-            text-align: center;
-        }
+        # Set the tensor to point to the input data
+        input_details = interpreter.get_input_details()
+        output_details = interpreter.get_output_details()
+        interpreter.set_tensor(input_details[0]['index'], [normalized_image_array])
 
-        button:hover {
-            background-color: #8ae9b3;
-            transform: scale(1.03);
-        }
+        # Run the model
+        interpreter.invoke()
 
-        /* Fade-in animation */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: scale(0.9);
-            }
+        # Get the output tensor
+        output_data = interpreter.get_tensor(output_details[0]['index'])
 
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
+        # Get the predicted class and confidence score
+        index = np.argmax(output_data)
+        class_name = class_names[index]
+        confidence_score = output_data[0][index] * 100  # Convert to percentage
 
-        /* Media queries for smaller screens */
-        @media (max-width: 768px) {
-            .header h2 {
-                font-size: 22px;
-            }
-
-            .custom-file-upload,
-            button {
-                font-size: 0.9rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .header h2 {
-                font-size: 20px;
-            }
-
-            .form-container {
-                width: 90%;
-            }
-
-            .custom-file-upload,
-            button {
-                font-size: 0.85rem;
-            }
-        }
-    </style>
-</head>
-
-<body>
-    <div class="form-container">
-        <div class="header">
-            <h2>Upload Image</h2>
-        </div>
-        <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            {% if error %}
-                <div class="error-message">{{ error }}</div>
-            {% endif %}
-            <label class="custom-file-upload">
-                <input type="file" name="image" id="fileInput">
-                <span id="fileName">Choose File</span>
-            </label>
-            <button type="submit">Upload Image</button>
-        </form>
-    </div>
-
-    <script>
-        const fileInput = document.getElementById('fileInput');
-        const fileName = document.getElementById('fileName');
-
-        fileInput.addEventListener('change', function () {
-            if (fileInput.files.length > 0) {
-                fileName.textContent = fileInput.files[0].name;
-            } else {
-                fileName.textContent = 'Choose File';
-            }
-        });
-    </script>
-</body>
-
-</html>
+        return {'class_name': class_name, 'confidence': confidence_score}
+    
+    except (requests.exceptions.RequestException, UnidentifiedImageError, IOError) as e:
+        # Return an error message if there was an issue with the URL or image
+        return {'error': 'Invalid image or URL. Please try again with a different image or URL.'}
