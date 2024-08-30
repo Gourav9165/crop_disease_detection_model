@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Result Page</title>
+    <style>
+        /* General body styling */
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: url('https://static.vecteezy.com/system/resources/previews/010/970/474/non_2x/close-up-green-leaves-with-blur-green-backgroun-in-nature-free-photo.jpg') no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
+        }
+
+        /* Container styling */
+        .result-container {
+            width: 90%;
+            max-width: 600px;
+            background: linear-gradient(135deg, #b7b5b529, #ffffff, #b7b5b55c);
+            border-radius: 20px;
+            box-shadow: 0 20px 30px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            animation: fadeIn 1s ease-in-out;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s;
+            /* padding: 20px; */
+            box-sizing: border-box;
+        }
+
+        .result-container:hover {
+            transform: scale(1.03);
+        }
+
+        .header {
+            text-align: center;
+            padding: 15px 0;
+            background-color: #8ae9b3;
+            background-image: linear-gradient(315deg, #c8d6e5 0%, #8ae9b3 74%);
+            color: #2c3e50;
+            margin-bottom: 20px;
+            border-radius: 20px;
+        }
+
+        .header h2 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        /* Image styling */
+        img {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        /* Text styling */
+        p {
+            font-size: 1rem;
+            margin: 10px 0;
+            color: #333;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        /* Link button styling */
+        a {
+            width: 80%;
+            max-width: 300px;
+            transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+            font-size: 1rem;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            display: inline-block;
+            text-align: center;
+            text-decoration: none;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: bold;
+            background: rgba(64, 186, 51, 0.438);
+            backdrop-filter: blur(20px);
+            padding: 20px;
+            color: #0d4608;
+            transition: 0.3s ease;
+            box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.07),
+                0px 2px 4px 0px rgba(0, 0, 0, 0.07),
+                0px 4px 8px 0px rgba(0, 0, 0, 0.07),
+                0px 8px 16px 0px rgba(0, 0, 0, 0.07),
+                0px 16px 32px 0px rgba(0, 0, 0, 0.07),
+                0px 32px 64px 0px rgba(0, 0, 0, 0.07);
+        }
+
+        a:hover {
+            background-color: #8ae9b3;
+            transform: scale(1.05);
+        }
+
+        /* Fade-in animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Media queries for smaller screens */
+        @media (max-width: 768px) {
+            .header h2 {
+                font-size: 22px;
+            }
+
+            img {
+                max-width: 100%;
+            }
+
+            p {
+                font-size: 0.9rem;
+            }
+
+            a {
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h2 {
+                font-size: 20px;
+            }
+
+            .result-container {
+                width: 100%;
+                /* padding: 15px; */
+            }
+
+            img {
+                max-width: 100%;
+            }
+
+            p {
+                font-size: 0.85rem;
+            }
+
+            a {
+                font-size: 0.85rem;
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="result-container">
+        <div class="header">
+            <h2>Prediction Result</h2>
+        </div>
+        <img src="{{ image_url }}" alt="Uploaded Image">
+        <p><strong>Disease:</strong> {{ class_name }}</p>
+        <p><strong>Accuracy:</strong> {{ confidence }}%</p>
+        <a href="{% url 'home' %}">Upload another image</a>
+    </div>
+</body>
+
+</html>

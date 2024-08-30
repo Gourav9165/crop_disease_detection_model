@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enter Image URL</title>
+    <style>
+        /* General body styling */
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: url(https://r4.wallpaperflare.com/wallpaper/1009/801/299/green-leaves-lilies-macro-water-drops-dew-wallpaper-d816fcdaafaca709ced0f9e2d2c9fb80.jpg) no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
+        }
+
+        /* Container styling */
+        .form-container {
+            width: 90%;
+            max-width: 500px;
+            background: linear-gradient(135deg, #b7b5b529, #ffffff, #b7b5b55c);
+            border-radius: 20px;
+            box-shadow: 0 20px 30px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            animation: fadeIn 1s ease-in-out;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s;
+            box-sizing: border-box;
+        }
+
+        .form-container:hover {
+            transform: scale(1.03);
+        }
+
+        .header {
+            text-align: center;
+            padding: 15px 0;
+            background-color: #8ae9b3;
+            background-image: linear-gradient(315deg, #c8d6e5 0%, #8ae9b3 74%);
+            color: #2c3e50;
+            margin-bottom: 20px;
+            border-radius: 20px;
+        }
+
+        .header h2 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        form {
+            margin-bottom: 20px;
+            padding: 0 20px;
+        }
+
+        /* Error message styling */
+        .error-message {
+            color: red;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        /* Input styling */
+        input {
+            width: 100%;
+            max-width: 500px;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            margin-bottom: 15px;
+            transition: box-shadow 0.3s ease;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+
+        input:focus {
+            outline: none;
+            box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+        }
+
+        /* Button styling */
+        button {
+            width: 100%;
+            max-width: 320px;
+            transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+            font-size: 1rem;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            display: inline-block;
+            text-align: center;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: bold;
+            background: rgba(64, 186, 51, 0.438);
+            backdrop-filter: blur(20px);
+            padding: 20px;
+            color: #0d4608;
+            transition: 0.3s ease;
+            box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.07),
+                0px 2px 4px 0px rgba(0, 0, 0, 0.07),
+                0px 4px 8px 0px rgba(0, 0, 0, 0.07),
+                0px 8px 16px 0px rgba(0, 0, 0, 0.07),
+                0px 16px 32px 0px rgba(0, 0, 0, 0.07),
+                0px 32px 64px 0px rgba(0, 0, 0, 0.07);
+        }
+
+        button:hover {
+            background-color: #8ae9b3;
+            transform: scale(1.03);
+        }
+
+        /* Fade-in animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Media queries for smaller screens */
+        @media (max-width: 768px) {
+            .header h2 {
+                font-size: 22px;
+            }
+
+            button {
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h2 {
+                font-size: 20px;
+            }
+
+            .form-container {
+                width: 90%;
+            }
+
+            input,
+            button {
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="form-container">
+        <div class="header">
+            <h2>Enter Image URL</h2>
+        </div>
+        <form method="post">
+            {% csrf_token %}
+            {% if error %}
+            <div class="error-message">{{ error }}</div>
+            {% endif %}
+            <input type="url" name="image_url" placeholder="Enter image URL" required>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,15 @@
+0 Corn___Common_Rust
+1 Corn___Gray_Leaf_Spot
+2 Corn___Healthy
+3 Corn___Northern_Leaf_Blight
+4 Invalid
+5 Potato___Early_Blight
+6 Potato___Healthy
+7 Potato___Late_Blight
+8 Rice___Brown_Spot
+9 Rice___Healthy
+10 Rice___Leaf_Blast
+11 Rice___Neck_Blast
+12 Wheat___Brown_Rust
+13 Wheat___Healthy
+14 Wheat___Yellow_Rust
