@@ -4,6 +4,9 @@
 
 ---
 
+## 🌟 **Overview**  
+Welcome to the **Crop Disease Detection project!** This Django-based web application allows users to detect crop diseases by uploading an image or providing an image URL. It leverages a **TensorFlow Lite (TFLite) model** for predictions and includes additional features like weather updates for user convenience.
+
 ## 🌟 Features  
 
 - **Upload Images** 📷: Upload a crop image to analyze for diseases.  
