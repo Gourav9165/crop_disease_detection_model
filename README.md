@@ -1,73 +1,105 @@
+---
 
-# 🌾 Crop Disease Detection using Deep Learning
+# 🌾 Crop Disease Detection 🚜  
+**Detect crop diseases and check weather conditions effortlessly using deep learning and an intuitive web interface!**
 
-Welcome to the Crop Disease Detection project! This Django-based web application allows users to detect crop diseases by uploading an image or entering an image URL. The application utilizes a TensorFlow Lite model to predict the disease and provides the result with an accuracy score.
+---
 
-## 🛠️ Features
-- **Upload Image**: Upload an image from your device to detect crop diseases.
-- **Enter Image URL**: Provide an image URL for disease detection.
-- **Modern UI**: Clean and modern user interface with nature-inspired themes.
+## 🌟 Features  
 
-## 🚀 Getting Started
+- **Upload Images** 📷: Upload a crop image to analyze for diseases.  
+- **Predict Diseases** 🔍: Powered by TensorFlow Lite for accurate predictions with confidence levels.  
+- **Use URLs** 🌐: Analyze images directly from a URL.  
+- **Check Weather** ☁️: Get real-time weather details based on your location.  
 
-### Prerequisites
-- Python 3.6+
-- Django 3.0+
-- TensorFlow Lite
-- PIL (Pillow)
-- Requests library
+---
 
-### Installation
+## 🛠️ Technology Stack  
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/Gourav9165/crop_disease_detection_model.git
-   cd crop-disease-detection
-   ```
+- **Backend**: Django, Python  
+- **Frontend**: HTML, CSS, JavaScript  
+- **Machine Learning**: TensorFlow Lite  
+- **Database**: SQLite  
+- **APIs Used**: OpenWeatherMap  
 
-2. **Create and activate a virtual environment:**
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows use `venv\Scripts\activate`
-   ```
+---
 
-3. **Install the required packages:**
-   ```bash
-   pip install -r requirements.txt
-   ```
+## ⚙️ Setup and Installation  
 
-4. **Set up your Django project:**
-   ```bash
-   python manage.py migrate
-   ```
+### 1️⃣ Clone the Repository  
 
-5. **Load the TensorFlow Lite model and labels:**
-   - Place your `.tflite` model and `labels.txt` file in the appropriate directory.
-   - Update the paths in `views.py`:
-     ```python
-     model_path = "path_to_your_model.tflite"
-     labels_path = "path_to_your_labels.txt"
-     ```
+```bash  
+git clone https://github.com/Gourav9165/crop_disease_detection_model.git 
+cd crop-disease-detection  
+```  
 
-### Running the Application
+### 2️⃣ Install Dependencies  
 
-1. **Start the Django development server:**
-   ```bash
-   python manage.py runserver
-   ```
+```bash  
+pip install -r requirements.txt  
+```  
 
-2. **Access the application:**
-   - Open your web browser and navigate to `http://127.0.0.1:8000`.
+### 3️⃣ Apply Migrations  
 
-### File Structure
-- `views.py`: Handles the image upload and prediction logic.
-- `templates/`: Contains the HTML files for the web pages.
-- `static/`: Stores the CSS and JS files for the UI.
-- `models.py`: Defines the data models for the project.
+```bash  
+python manage.py migrate  
+```  
 
+### 4️⃣ Run the Development Server  
 
+```bash  
+python manage.py runserver  
+```  
 
-## 🤝 Contributing
+Access the app at `http://127.0.0.1:8000/`. 🎉  
 
-Feel free to contribute to this project by submitting pull requests, reporting issues, or suggesting features.
+---
 
+## 🔬 How It Works  
+
+1. **Upload or Provide URL**: Use the interface to upload a crop image or provide an image URL.  
+2. **Model Prediction**: The uploaded image is resized, normalized, and passed to a TensorFlow Lite model for disease detection.  
+3. **Get Results**: View the predicted disease name and confidence percentage.  
+
+---
+
+## 🖼️ Screenshots  
+
+### 📸 Upload Page  
+
+![Upload Page](https://via.placeholder.com/800x400.png?text=Upload+Page)  
+
+### 🔎 Prediction Results  
+
+![Prediction Result](https://via.placeholder.com/800x400.png?text=Prediction+Result)  
+
+---
+
+## 📜 Usage Details  
+
+- **File Upload**: Click "Upload Image" to browse and upload a file.  
+- **URL Input**: Click "Enter Image URL" to analyze an image using its URL.  
+- **Weather**: Access real-time weather information for your region.  
+
+---
+
+## 🧩 Future Enhancements  
+
+- 🌍 Multi-language support.  
+- 📊 Detailed disease treatment recommendations.  
+- 📱 Mobile-friendly responsive design.   
+
+---
+
+## 📜 License  
+
+This project is licensed under the MIT License.  
+
+---
+
+## 🌟 Acknowledgments  
+
+- **TensorFlow Lite**: For enabling lightweight ML predictions.  
+- **OpenWeatherMap API**: For weather data integration.  
+
+---
