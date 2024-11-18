@@ -1,4 +1,3 @@
----
 
 # 🌾 Crop Disease Detection 🚜  
 **Detect crop diseases and check weather conditions effortlessly using deep learning and an intuitive web interface!**
