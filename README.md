@@ -63,19 +63,6 @@ Access the app at `http://127.0.0.1:8000/`. 🎉
 2. **Model Prediction**: The uploaded image is resized, normalized, and passed to a TensorFlow Lite model for disease detection.  
 3. **Get Results**: View the predicted disease name and confidence percentage.  
 
----
-
-## 🖼️ Screenshots  
-
-### 📸 Upload Page  
-
-![Upload Page](https://via.placeholder.com/800x400.png?text=Upload+Page)  
-
-### 🔎 Prediction Results  
-
-![Prediction Result](https://via.placeholder.com/800x400.png?text=Prediction+Result)  
-
----
 
 ## 📜 Usage Details  
 
